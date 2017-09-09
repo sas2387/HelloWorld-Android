@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    
     <android.support.v7.widget.ListViewCompat
-        android:id="@+id/listview_previouschats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="0.5dp"
-        android:divider="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        >
+        android:id="@+id/listview_chat"
+        android:layout_weight="10"></android.support.v7.widget.ListViewCompat>
 
-    </android.support.v7.widget.ListViewCompat>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
 </LinearLayout>
