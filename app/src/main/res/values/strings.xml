@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">InterChat</string>
+
+    <string name="app_preferences">App Preferences</string>
+    <string name="default_language">Default Language</string>
+    <string name="interests">Interests</string>
+    <string name="preferences_set">Preferences Set</string>
 </resources>
