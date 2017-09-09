@@ -3,11 +3,4 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.ListViewCompat
-        android:id="@+id/listview_previouschats"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.ListViewCompat>
-
 </LinearLayout>

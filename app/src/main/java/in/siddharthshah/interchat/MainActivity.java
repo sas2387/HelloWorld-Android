@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by siddharthshah on 9/8/17.
  */
@@ -30,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
         isPreferencesSet = sp.getBoolean(getString(R.string.preferences_set), false);
         if(!isPreferencesSet){
+            ChatDataSource dataSource = new ChatDataSource(getBaseContext());
+            dataSource.open();
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+            dataSource.insertChat(1, "Kunal Baweja", "kunal.baweja@columbia.edu", sdf.format(date));
+            dataSource.insertChat(2, "Akshay Nagpal", "akshay.nagpal@columbia.edu", sdf.format(date));
+            dataSource.close();
+
             // show preferences fragment
             fragmentManager.beginTransaction().replace(R.id.ll_container, new PreferencesFragment()).commit();
         } else {
@@ -42,5 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void openChatFragment(){
         Log.d("TAG","OPEN CHAT");
         fragmentManager.beginTransaction().replace(R.id.ll_container, new PreviousChatsFragment()).commit();
+
     }
 }

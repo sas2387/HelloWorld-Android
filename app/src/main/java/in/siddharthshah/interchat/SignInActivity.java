@@ -87,9 +87,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 // send details to backend
                 // TODO
 
-                // register gcm
-                // TODO
-
                 // move to preferences screen
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
