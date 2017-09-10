@@ -69,7 +69,7 @@ public class SelectUsertoChatActivity extends AppCompatActivity {
         });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("InterChat");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
 
@@ -98,6 +98,9 @@ public class SelectUsertoChatActivity extends AppCompatActivity {
                             for(int i=0; i<jsonArray.length(); i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 User user = new User(jsonObject.getString("name"), jsonObject.getString("uid"));
+                                if(myID.equals(user.getUid())){
+                                    continue;
+                                }
                                 userList.add(user);
                             }
                             userListAdapter.notifyDataSetChanged();

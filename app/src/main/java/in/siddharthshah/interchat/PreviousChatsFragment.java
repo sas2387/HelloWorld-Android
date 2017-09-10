@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by siddharthshah on 9/9/17.
@@ -41,6 +43,7 @@ public class PreviousChatsFragment extends Fragment {
     ListViewCompat listViewCompat;
     boolean loaded = false;
     String myID;
+    HashMap<String, String> nameToId;
 
     private DatabaseReference dbReference;
 
@@ -67,7 +70,8 @@ public class PreviousChatsFragment extends Fragment {
             List<Chat> chats = dataSource.getAllChatsSorted();
             dataSource.close(); */
 
-            final ArrayList<String> chatIds = new ArrayList<>();
+
+            nameToId = new HashMap<>();
             final ArrayList<String> chatNames = new ArrayList<>();
             final ArrayAdapter<String> chatsAdapter = new ChatPreviewAdapter(getActivity(), chatNames);
             listViewCompat.setAdapter(chatsAdapter);
@@ -82,9 +86,7 @@ public class PreviousChatsFragment extends Fragment {
             myRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    String key = dataSnapshot.getKey();
-                    Log.d("ID",key);
-                    chatIds.add(key);
+                    final String key = dataSnapshot.getKey();
 
                     RequestQueue queue = Volley.newRequestQueue(getContext());
                     String url ="https://interchat-backend.appspot.com/user/get?uid="+key;
@@ -99,6 +101,7 @@ public class PreviousChatsFragment extends Fragment {
                                         JSONArray jsonArray = new JSONArray(response);
                                         String name = jsonArray.getJSONObject(0).getString("name");
                                         chatNames.add(name);
+                                        nameToId.put(name, key);
                                         chatsAdapter.notifyDataSetChanged();
                                     }catch (JSONException e){
                                         e.printStackTrace();
@@ -141,9 +144,9 @@ public class PreviousChatsFragment extends Fragment {
                 public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                     //open new activity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra("myID",myID);
-                    intent.putExtra("senderID", chatIds.get(pos));
+                    intent.putExtra("myID", myID);
                     intent.putExtra("senderName", chatNames.get(pos));
+                    intent.putExtra("senderID", nameToId.get(chatNames.get(pos)));
                     startActivity(intent);
                 }
             });

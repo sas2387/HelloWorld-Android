@@ -18,6 +18,7 @@
     <android.support.v7.widget.ListViewCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:stackFromBottom="true"
         android:id="@+id/listview_chat"
         android:layout_weight="10"></android.support.v7.widget.ListViewCompat>
 
@@ -32,6 +33,7 @@
             android:id="@+id/et_chat"
             android:imeOptions="actionSend"
             android:inputType="text"
+            android:hint="Write a message here ..."
             android:maxLines="1" />
 
     </LinearLayout>

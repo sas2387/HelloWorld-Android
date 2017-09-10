@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMessage> {
 
         TextView tvChatMsg = convertView.findViewById(R.id.tv_chatmsg);
         TextView tvTime = convertView.findViewById(R.id.tv_time);
-        tvChatMsg.setText(chatMessage.getMsg());
+        tvChatMsg.setText(Html.fromHtml(chatMessage.getMsg()));
         Date d = new Date(chatMessage.getTimestamp());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         tvTime.setText(sdf.format(d));

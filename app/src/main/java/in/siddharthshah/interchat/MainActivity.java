@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("InterChat");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -80,9 +80,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             isPreferencesSet = sp.getBoolean(getString(R.string.preferences_set), false);
             if (!isPreferencesSet) {
                 // show preferences fragment
+                fab.setVisibility(View.GONE);
                 fragmentManager.beginTransaction().replace(R.id.ll_container, new PreferencesFragment()).commit();
             } else {
                 // show default chat screen
+                fab.setVisibility(View.VISIBLE);
                 fragmentManager.beginTransaction().replace(R.id.ll_container, new PreviousChatsFragment()).commit();
             }
             loaded = true;
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.preferences:
+                fab.setVisibility(View.GONE);
                 fragmentManager.beginTransaction().replace(R.id.ll_container, new PreferencesFragment()).commit();
                 break;
             case R.id.signout:
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     protected void openChatFragment(){
         Log.d("TAG","OPEN CHAT");
+        fab.setVisibility(View.VISIBLE);
         fragmentManager.beginTransaction().replace(R.id.ll_container, new PreviousChatsFragment()).commit();
     }
 

@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -46,7 +47,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("InterChat");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
 
@@ -69,6 +70,19 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone())
+        {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done" and the GoogleSignInResult will be available instantly.
+            Log.d("TAG", "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        }
+    }
+
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -76,27 +90,31 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         //   GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                // Get account information
-                String fullName = acct.getDisplayName();
-                String email = acct.getEmail();
-                String id = acct.getId();
-
-                SharedPreferences sp = getSharedPreferences(getString(R.string.my_details), MODE_PRIVATE);
-                sp.edit().putString(getString(R.string.my_name), fullName).commit();
-                sp.edit().putString(getString(R.string.my_email), email).commit();
-                sp.edit().putString(getString(R.string.my_id), id).commit();
-
-                // move to preferences screen
-                Intent i = new Intent(this, MainActivity.class);
-                i.putExtra("name",fullName);
-                i.putExtra("email",email);
-                i.putExtra("uid", id);
-                startActivity(i);
-            }
-
+            handleSignInResult(result);
         }
+    }
+
+    public void handleSignInResult(GoogleSignInResult result){
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+            // Get account information
+            String fullName = acct.getDisplayName();
+            String email = acct.getEmail();
+            String id = acct.getId();
+
+            SharedPreferences sp = getSharedPreferences(getString(R.string.my_details), MODE_PRIVATE);
+            sp.edit().putString(getString(R.string.my_name), fullName).commit();
+            sp.edit().putString(getString(R.string.my_email), email).commit();
+            sp.edit().putString(getString(R.string.my_id), id).commit();
+
+            // move to preferences screen
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("name",fullName);
+            i.putExtra("email",email);
+            i.putExtra("uid", id);
+            startActivity(i);
+        }
+
     }
 
 }

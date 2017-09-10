@@ -52,18 +52,28 @@ public class PreferencesFragment extends Fragment implements View.OnClickListene
     List<String> finalInterestList;
 
     HashMap<String, String> langToCode = new HashMap<>();
-    ArrayList<String> languages = new ArrayList<>();
+    String[] languages;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Locale[] locales = Locale.getAvailableLocales();
-        for(Locale locale : locales) {
-            languages.add(locale.getDisplayName());
-            langToCode.put(locale.getDisplayName(), locale.toLanguageTag());
-        }
-        Collections.sort(languages);
+        languages = new String[] {"English", "Gujarati", "Hindi", "Spanish", "Chinese", "German", "French", "Japanese", "Tamil", "Dutch", "Russian", "Greek", "Hebrew", "Hungarian", "Latin"};
+        langToCode.put("English","en");
+        langToCode.put("Gujarati","gu");
+        langToCode.put("Hindi","hi");
+        langToCode.put("Spanish","es");
+        langToCode.put("Chinese","zh-CN");
+        langToCode.put("German","de");
+        langToCode.put("French","fr");
+        langToCode.put("Japanese","ja");
+        langToCode.put("Tamil","ta");
+        langToCode.put("Dutch","nl");
+        langToCode.put("Russian","ru");
+        langToCode.put("Greek","el");
+        langToCode.put("Hebrew","iw");
+        langToCode.put("Hungarian","hu");
+        langToCode.put("Latin","la");
     }
 
     @Nullable
@@ -95,11 +105,13 @@ public class PreferencesFragment extends Fragment implements View.OnClickListene
         if(prefSet) {
             String languageTag = sp.getString(getString(R.string.default_language), "");
             Set<String> interestSet = sp.getStringSet(getString(R.string.interests), new HashSet<String>());
-            List<String> interestList =new ArrayList(interestSet);
+            List<String> interestList = new ArrayList(interestSet);
 
-            String displayName = Locale.forLanguageTag(languageTag).getDisplayName();
-            int pos = languages.indexOf(displayName);
-            spinner.setSelection(pos);
+            for(int pos = 0; pos < languages.length; pos++){
+                if(langToCode.get(languages[pos]).equals(languageTag)){
+                    spinner.setSelection(pos);
+                }
+            }
 
             for(String interest : interestList) {
                 listViewCompat.setItemChecked(finalInterestList.indexOf(interest), true);
