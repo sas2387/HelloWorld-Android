@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">InterChat</string>
 
+    <string name="my_details">My Details</string>
+    <string name="my_name">My Name</string>
+    <string name="my_id">My ID</string>
+    <string name="my_email">My Email</string>
+
+    <string name="preferences">Preferences</string>
+
     <string name="app_preferences">App Preferences</string>
     <string name="default_language">Default Language</string>
     <string name="interests">Interests</string>

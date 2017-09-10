@@ -12,10 +12,10 @@ import java.util.Map;
 public class ChatMessage {
 
     private String msg;
-    private int userid;
+    private String userid;
     private long timestamp;
 
-    public ChatMessage(String msg, int userid, long timestamp) {
+    public ChatMessage(String msg, String userid, long timestamp) {
         this.msg = msg;
         this.userid = userid;
         this.timestamp = timestamp;
@@ -33,11 +33,11 @@ public class ChatMessage {
         this.msg = msg;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 

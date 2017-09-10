@@ -1,9 +1,11 @@
 package in.siddharthshah.interchat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -39,10 +41,13 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         // Set the dimensions of the sign-in button.
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar.setTitle("InterChat");
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -77,20 +82,18 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 String fullName = acct.getDisplayName();
                 String email = acct.getEmail();
                 String id = acct.getId();
-                String idtoken = acct.getIdToken();
-                Log.d("NAME",fullName);
-                Log.d("EMAIL",email);
-                if(id != null) {
-                    Log.d("ID", id);
-                }
 
-                // send details to backend
-                // TODO
+                SharedPreferences sp = getSharedPreferences(getString(R.string.my_details), MODE_PRIVATE);
+                sp.edit().putString(getString(R.string.my_name), fullName).commit();
+                sp.edit().putString(getString(R.string.my_email), email).commit();
+                sp.edit().putString(getString(R.string.my_id), id).commit();
 
                 // move to preferences screen
                 Intent i = new Intent(this, MainActivity.class);
+                i.putExtra("name",fullName);
+                i.putExtra("email",email);
+                i.putExtra("uid", id);
                 startActivity(i);
-
             }
 
         }

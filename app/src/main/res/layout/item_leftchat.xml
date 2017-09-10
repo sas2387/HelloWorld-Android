@@ -3,12 +3,33 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/cast_intro_overlay_button_background_color"
+        android:background="#ffffcc"
         android:padding="8dp"
-        android:layout_margin="8dp"
-        android:text="Message by sender"/>
+        android:layout_margin="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_chatmsg"
+            android:textSize="18dp"
+            android:textColor="#000000"
+            android:text="Message by sender"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:id="@+id/tv_time"
+            android:layout_marginLeft="4dp"
+            android:text="Time"/>
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

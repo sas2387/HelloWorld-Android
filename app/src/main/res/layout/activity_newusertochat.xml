@@ -15,26 +15,39 @@
         app:titleTextColor="#FFFFFF"
         />
 
-    <android.support.v7.widget.ListViewCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listview_chat"
-        android:layout_weight="10"></android.support.v7.widget.ListViewCompat>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#efefef">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_chat"
-            android:imeOptions="actionSend"
-            android:inputType="text"
-            android:maxLines="1" />
+            android:text="Interested in Chatting about.."/>
+
+        <Spinner
+            android:id="@+id/spinner_interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="findPersons"
+            android:text="Find"/>
+
+        <ListView
+            android:id="@+id/lv_personsinterested"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
 
     </LinearLayout>
+
 
 
 </LinearLayout>
